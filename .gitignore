@@ -1,1 +1,16 @@
-.env
+/*
+
+!/glance/
+!/home-assistant/
+!/immich/
+!/keycloak/
+!/monitoring/
+!/nextcloud/
+!/pihole/
+!/stirling/
+!/traefik/
+!/vaultwarden/
+
+!/.gitignore
+
+**/.env
