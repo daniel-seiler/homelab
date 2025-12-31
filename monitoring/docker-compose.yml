@@ -6,10 +6,7 @@ services:
     volumes:
       - influxdb-data:/var/lib/influxdb2
       - ./influxdb/config:/etc/influxdb2
-    env_file:
-      - .env
     environment:
-      # InfluxDB 2.x Initial Setup
       DOCKER_INFLUXDB_INIT_MODE: setup
       DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USER}
       DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD}
@@ -21,15 +18,10 @@ services:
       - monitoring-backend
     labels:
       - "traefik.enable=true"
-      # Tells Traefik which network to use for routing (crucial for multiple networks)
       - "traefik.docker.network=traefik-network"
-      
-      # Router Configuration
       - "traefik.http.routers.influxdb.rule=Host(`influxdb.${DOMAIN}`)"
       - "traefik.http.routers.influxdb.entrypoints=websecure"
       - "traefik.http.routers.influxdb.tls.certresolver=letsencrypt"
-      
-      # Service Configuration
       - "traefik.http.services.influxdb.loadbalancer.server.port=8086"
 
   grafana:
@@ -38,18 +30,11 @@ services:
     restart: unless-stopped
     volumes:
       - grafana-data:/var/lib/grafana
-    env_file:
-      - .env
     environment:
-      # URL Configuration
       GF_SERVER_ROOT_URL: "https://grafana.${DOMAIN}"
       GF_SERVER_DOMAIN: "grafana.${DOMAIN}"
-      
-      # Security
       GF_SECURITY_ADMIN_USER: ${GRAFANA_USER}
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
-      
-      # Plugins (Optional)
       GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource"
     networks:
       - traefik-network
@@ -59,13 +44,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      
-      # Router Configuration
       - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN}`)"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls.certresolver=letsencrypt"
-      
-      # Service Configuration
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
 
   telegraf:
@@ -75,14 +56,9 @@ services:
     user: "0:989"
     pid: "host"
     volumes:
-      # Mount the local config file
       - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      # Docker Socket
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      # Host Filesystem
       - /:/hostfs:ro
-    env_file:
-      - .env
     environment:
       HOST_MOUNT_PREFIX: /hostfs
       INFLUX_TOKEN: ${TELEGRAF_TOKEN}

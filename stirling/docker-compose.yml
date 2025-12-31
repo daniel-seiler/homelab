@@ -3,13 +3,8 @@ services:
     image: stirlingtools/stirling-pdf:latest
     container_name: stirling-pdf
     environment:
-      # --- Language Settings (German) ---
       - SYSTEM_DEFAULTLOCALE=de-DE
-      
-      # --- Security (Login Removed) ---
       - SECURITY_ENABLELOGIN=false
-      
-      # --- General Settings ---
       - SYSTEM_GOOGLEVISIBILITY=false
       - SYSTEM_CONNECTIONTIMEOUTMINUTES=5
       - SERVER_FORWARD_HEADERS_STRATEGY=NATIVE

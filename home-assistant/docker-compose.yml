@@ -15,13 +15,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      
-      # Router Config
       - "traefik.http.routers.homeassistant.rule=Host(`ha.${DOMAIN}`)"
       - "traefik.http.routers.homeassistant.entrypoints=websecure"
       - "traefik.http.routers.homeassistant.tls.certresolver=letsencrypt"
-      
-      # Service Config (Port 8123 is standard for HA)
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
 
 networks:
