@@ -1,0 +1,47 @@
+services:
+  stirling-pdf:
+    image: stirlingtools/stirling-pdf:latest
+    container_name: stirling-pdf
+    environment:
+      # --- Language Settings (German) ---
+      - SYSTEM_DEFAULTLOCALE=de-DE
+      
+      # --- Security (Login Removed) ---
+      - SECURITY_ENABLELOGIN=false
+      
+      # --- General Settings ---
+      - SYSTEM_GOOGLEVISIBILITY=false
+      - SYSTEM_CONNECTIONTIMEOUTMINUTES=5
+      - SERVER_FORWARD_HEADERS_STRATEGY=NATIVE
+
+    volumes:
+      - ./stirling-data/tessdata:/usr/share/tessdata
+      - ./stirling-data/configs:/configs
+      - ./stirling-data/logs:/logs
+      - ./stirling-data/customFiles:/customFiles:rw
+
+    networks:
+      - traefik-network
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stirling.rule=Host(`pdf.${DOMAIN}`)"
+      - "traefik.http.routers.stirling.entrypoints=websecure"
+      - "traefik.http.routers.stirling.tls=true"
+      - "traefik.http.routers.stirling.tls.certresolver=letsencrypt"
+      - "traefik.http.services.stirling.loadbalancer.server.port=8080"
+      - "traefik.docker.network=traefik-network"
+
+    restart: unless-stopped
+    
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 1G
+
+networks:
+  traefik-network:
+    external: true
