@@ -1,0 +1,91 @@
+- name: Home
+  columns:
+    - size: small
+      widgets:
+        - type: calendar
+          first-day-of-week: monday
+        - type: weather
+          location: Überlingen, Germany
+          units: metric
+          hour-format: 24h
+
+    - size: full
+      widgets:
+        - type: search
+          search-engine: google
+          autofocus: true
+        - type: monitor
+          cache: 5m
+          title: Services
+          sites:
+            - title: Glance
+              url: https://home.dseiler.com/
+              icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/glance.svg
+            - title: Pi-Hole
+              url: https://pihole.dseiler.com/admin/login/
+              icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/pi-hole.svg
+            - title: Traefik
+              url: https://traefik.dseiler.com/dashboard/
+              icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/traefik.svg
+            - title: Keycloak
+              url: https://keycloak.dseiler.com/admin/master/console/
+              icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/keycloak.svg
+            - title: Vaultwarden
+              url: https://vaultwarden.dseiler.com/#/vault
+              icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/vaultwarden-light.svg
+            - title: Nextcloud
+              url: https://nextcloud.dseiler.com/
+              icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/nextcloud.svg
+            - title: Immich
+              url: https://immich.dseiler.com/
+              icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg
+            - title: Stirling-PDF
+              url: https://pdf.dseiler.com/
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/stirling-pdf.svg
+            - title: Overleaf
+              url: https://latex.dseiler.com/
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/overleaf.svg
+            - title: InfluxDB
+              url: https://influxdb.dseiler.com/
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/influxdb.svg
+            - title: Grafana
+              url: https://grafana.dseiler.com/
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/grafana.svg
+            - title: Home Assistant
+              url: https://ha.dseiler.com/
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/home-assistant.svg
+
+    - size: small
+      widgets:
+        - type: custom-api
+          title: Next F1 Race
+          cache: 2h
+          url: https://f1api.dev/api/current/next
+          template: |
+            <div class="flex flex-column gap-10">
+              {{ $session := index (.JSON.Array "race") 0 }}
+              <p class="size-h5">
+                Round {{ .JSON.String "round" }}
+              </p>
+        
+              <div class="margin-block-4">
+                <p class="color-highlight">{{ $session.String "raceName" }}</p>
+                <p class="color-primary">
+                  <span>Race</span>
+                  {{ $datetime := concat ($session.String "schedule.race.date") "T" ($session.String "schedule.race.time") }}
+                  <span
+                    class="color-highlight"
+                    title="{{ $session.String "schedule.race.date" }}"
+                    {{ parseRelativeTime "rfc3339" $datetime }}
+                  ></span>
+                </p>
+                <p class="size-h5">{{ $session.String "schedule.race.date" }} at {{ $session.String "schedule.race.time" }}</p>
+              </div>
+        
+              <ul class="size-h5 attachments">
+                <li>{{ $session.String "circuit.country" }}</li>
+                <li>{{ $session.String "circuit.city" }}</li>
+                <li>{{ $session.String "circuit.circuitName" }}</li>
+              </ul>
+            </div>
+        

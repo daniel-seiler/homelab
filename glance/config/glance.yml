@@ -1,0 +1,17 @@
+server:
+  assets-path: /app/assets
+
+theme:
+  background-color: 211 49 10
+  primary-color: 150 100 51.6
+  contrast-multiplier: 1.2
+  positive-color: 90 100 51.6
+  negative-color: 330 100 51.6
+
+pages:
+  - $include: home.yml
+  - $include: stats.yml
+
+branding:
+  hide-footer: true
+  app-name: "Homelab"

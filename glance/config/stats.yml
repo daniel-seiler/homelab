@@ -1,0 +1,25 @@
+- name: Stats
+  columns:
+    - size: small
+      widgets:
+        - type: server-stats
+          servers:
+            - type: local
+              name: Server
+        - type: bookmarks
+          groups:
+            - title: Hosting
+              links:
+                - title: Domain dashboard
+                  url: https://mein.ionos.de/domains
+                - title: VPS dashboard
+                  url: https://cloudpanel.ionos.de/
+                - title: Cloudflare
+                  url: https://dash.cloudflare.com/
+                - title: Tailscale
+                  url: https://login.tailscale.com/admin/machines
+
+    - size: full
+      widgets:
+        - type: docker-containers
+          hide-by-default: false
