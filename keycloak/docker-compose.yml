@@ -35,7 +35,7 @@ services:
       KC_HOSTNAME: keycloak.${DOMAIN}
       KC_HOSTNAME_STRICT_HTTPS: 'true'
       KC_PROXY_HEADERS: 'xforwarded'
-      KC_HTTP_ENABLED: 'false'
+      KC_HTTP_ENABLED: 'true'
       KC_HOSTNAME_URL: https://keycloak.${DOMAIN}
       KC_HOSTNAME_ADMIN_URL: https://keycloak.${DOMAIN}
       PROXY_ADDRESS_FORWARDING: 'true'
