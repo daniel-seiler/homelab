@@ -1,0 +1,86 @@
+networks:
+  traefik-network:
+    external: true
+  overleaf_internal:
+
+services:
+  sharelatex:
+    image: sharelatex/sharelatex:latest
+    container_name: sharelatex
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - overleaf_internal
+      - traefik-network
+    volumes:
+      - ./overleaf_data:/var/lib/overleaf
+    environment:
+      OVERLEAF_APP_NAME: Overleaf Homelab
+      OVERLEAF_MONGO_URL: mongodb://mongo/sharelatex
+      OVERLEAF_REDIS_HOST: redis
+      REDIS_HOST: redis
+      
+      # Determine if users can create account freely
+      # ENABLE_REGISTRATIONS: 'true'
+
+      # Standard Settings
+      ENABLED_LINKED_FILE_TYPES: 'project_file,project_output_file'
+      ENABLE_CONVERSIONS: 'true'
+      EMAIL_CONFIRMATION_DISABLED: 'true'
+      
+      # Update this to your actual domain
+      OVERLEAF_SITE_URL: 'https://latex.${DOMAIN}'
+
+      # --- Server Pro Features (Disabled for Community Edition) ---
+      # Community Edition does not support Sandboxed Compiles (sibling containers).
+      # Keeping these enabled with the standard image will often cause issues.
+      SANDBOXED_COMPILES: 'false'
+      
+      # --- Email Configuration (Optional) ---
+      # OVERLEAF_EMAIL_FROM_ADDRESS: "hello@example.com"
+      # OVERLEAF_EMAIL_SMTP_HOST: smtp.example.com
+      # OVERLEAF_EMAIL_SMTP_PORT: 587
+      # OVERLEAF_EMAIL_SMTP_SECURE: false
+      # OVERLEAF_EMAIL_SMTP_USER: "user"
+      # OVERLEAF_EMAIL_SMTP_PASS: "password"
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-network"
+      - "traefik.http.routers.overleaf.rule=HOST(`latex.${DOMAIN}`)"
+      - "traefik.http.routers.overleaf.entrypoints=websecure"
+      - "traefik.http.routers.overleaf.tls.certresolver=letsencrypt"
+      - "traefik.http.services.overleaf.loadbalancer.server.port=80"
+
+  mongo:
+    image: mongo:8.0
+    container_name: sharelatex_mongo
+    restart: unless-stopped
+    command: "--replSet overleaf"
+    networks:
+      - overleaf_internal
+    volumes:
+      - ./mongo_data:/data/db
+    expose:
+      - "27017"
+    healthcheck:
+      test: echo 'db.stats().ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:6.2
+    container_name: sharelatex_redis
+    restart: unless-stopped
+    networks:
+      - overleaf_internal
+    volumes:
+      - ./redis_data:/data
+    expose:
+      - "6379"
+
