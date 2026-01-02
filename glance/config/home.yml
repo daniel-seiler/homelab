@@ -34,7 +34,7 @@
               url: https://vault.dseiler.com/#/vault
               icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/vaultwarden-light.svg
             - title: Nextcloud
-              url: https://nextcloud.dseiler.com/
+              url: https://cloud.dseiler.com/
               icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/nextcloud.svg
             - title: Immich
               url: https://immich.dseiler.com/
