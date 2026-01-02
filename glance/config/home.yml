@@ -47,7 +47,7 @@
               icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/overleaf.svg
             - title: InfluxDB
               url: https://influxdb.dseiler.com/
-              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/influxdb.svg
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/influxdb-light.svg
             - title: Grafana
               url: https://grafana.dseiler.com/
               icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/grafana.svg
