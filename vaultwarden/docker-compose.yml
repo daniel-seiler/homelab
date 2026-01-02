@@ -1,13 +1,20 @@
 services:
   vaultwarden:
-    image: vaultwarden/server:1.29.1
+    image: vaultwarden/server:latest
     container_name: vaultwarden
     volumes:
       - vaultwarden-data:/data
     environment:
+      SSO_ENABLED: 'true'
       WEBSOCKET_ENABLED: 'true'
       SIGNUPS_ALLOWED: 'true'
       ADMIN_TOKEN: ${ADMIN_TOKEN}
+      SSO_AUTHORITY: https://keycloak.${DOMAIN}/realms/${REALM}
+      SSO_CLIENT_ID: ${SSO_CLIENT_ID}
+      SSO_CLIENT_SECRET: ${SSO_CLIENT_SECRET}
+      SSO_SCOPES: 'openid email profile'
+      SSO_SIGNUPS_MATCH_EMAIL: 'true'
+      DOMAIN: https://vault.${DOMAIN}
     networks:
       - vaultwarden-network
       - traefik-network
