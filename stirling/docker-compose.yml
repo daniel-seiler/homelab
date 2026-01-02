@@ -1,7 +1,7 @@
 services:
   stirling-pdf:
     image: stirlingtools/stirling-pdf:latest
-    container_name: stirling-pdf
+    container_name: stirling_pdf
     environment:
       - SYSTEM_DEFAULTLOCALE=de-DE
       - SECURITY_ENABLELOGIN=false
