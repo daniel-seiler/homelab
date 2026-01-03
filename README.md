@@ -1,5 +1,7 @@
 # My Homelab Setup
 
+Dashboard reachable at <https://home.dseiler.com>
+
 ```mermaid
 graph TD
     subgraph Users [Access Points]
