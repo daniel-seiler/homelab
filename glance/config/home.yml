@@ -54,6 +54,9 @@
             - title: Home Assistant
               url: https://ha.dseiler.com/
               icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/home-assistant.svg
+            - title: Open-WebUI
+              url: https://ai.dseiler.com/
+              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/open-webui.svg
 
     - size: small
       widgets:

@@ -1,0 +1,51 @@
+services:
+  ollama:
+    volumes:
+      - ollama:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:latest
+    networks:
+      - llm-backend
+
+  open-webui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    volumes:
+      - open-webui:/app/backend/data
+    depends_on:
+      - ollama
+    environment:
+      - 'OLLAMA_BASE_URL=http://ollama:11434'
+      - 'WEBUI_SECRET_KEY='
+      - 'HOST=0.0.0.0'
+      - 'PORT=8080'
+      - 'AIOHTTP_CLIENT_TIMEOUT=300'
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+    networks:
+      - llm-backend
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.open-webui.rule=Host(`ai.${DOMAIN}`)"
+      - "traefik.http.routers.open-webui.entrypoints=websecure"
+      - "traefik.http.routers.open-webui.tls.certresolver=letsencrypt"
+      - "traefik.http.services.open-webui.loadbalancer.server.port=8080"
+
+volumes:
+  ollama: {}
+  open-webui: {}
+
+networks:
+  traefik-network:
+    external: true
+  llm-backend:
+    name: llm-backend
+

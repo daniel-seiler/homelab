@@ -10,6 +10,8 @@
 !/stirling/
 !/traefik/
 !/vaultwarden/
+!/overleaf/
+!/open-webui/
 
 !/.gitignore
 
