@@ -20,25 +20,19 @@ services:
       - ./overleaf_data:/var/lib/overleaf
     environment:
       OVERLEAF_APP_NAME: Overleaf Homelab
+      OVERLEAF_ADMIN_EMAIL: ${ADMIN_MAIL}
       OVERLEAF_MONGO_URL: mongodb://mongo/sharelatex
       OVERLEAF_REDIS_HOST: redis
       REDIS_HOST: redis
-      
-      # Determine if users can create account freely
-      # ENABLE_REGISTRATIONS: 'true'
 
-      # Standard Settings
+      OVERLEAF_SITE_URL: 'https://latex.${DOMAIN}'
+      SANDBOXED_COMPILES: 'false'
+      
+      OVERLEAF_ALLOW_PUBLIC_ACCESS: 'true'
+      OVERLEAF_ENABLE_REGISTRATION: 'true'
       ENABLED_LINKED_FILE_TYPES: 'project_file,project_output_file'
       ENABLE_CONVERSIONS: 'true'
       EMAIL_CONFIRMATION_DISABLED: 'true'
-      
-      # Update this to your actual domain
-      OVERLEAF_SITE_URL: 'https://latex.${DOMAIN}'
-
-      # --- Server Pro Features (Disabled for Community Edition) ---
-      # Community Edition does not support Sandboxed Compiles (sibling containers).
-      # Keeping these enabled with the standard image will often cause issues.
-      SANDBOXED_COMPILES: 'false'
       
       # --- Email Configuration (Optional) ---
       # OVERLEAF_EMAIL_FROM_ADDRESS: "hello@example.com"
