@@ -1,6 +1,6 @@
 services:
   reverse-proxy:
-    image: traefik:v2.10
+    image: traefik:v2.11
     container_name: traefik
     command:
       - "--log.level=INFO"
@@ -30,12 +30,14 @@ services:
       - CLOUDFLARE_POLLING_INTERVAL=${POLLING_INTERVAL}
       - CLOUDFLARE_PROPAGATION_TIMEOUT=${PROPAGATION_TIMEOUT}
       - CLOUDFLARE_TTL=${TTL}
+      - DOCKER_API_VERSION=1.45
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN}`)"
       - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
       - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.docker.network=traefik-network"
     networks:
       - traefik-network
     restart: always
