@@ -16,11 +16,18 @@
           autofocus: true
         - type: monitor
           cache: 5m
-          title: Services
+          title: Public
           sites:
+            - title: Projects
+              url: https://dseiler.com/
+              icon: https://api.iconify.design/arcticons/emoji-web.svg
             - title: Glance
               url: https://home.dseiler.com/
               icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/glance.svg
+        - type: monitor
+          cache: 5m
+          title: Services
+          sites:
             - title: Pi-Hole
               url: https://pihole.dseiler.com/admin/login/
               icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/pi-hole.svg
@@ -39,12 +46,6 @@
             - title: Immich
               url: https://immich.dseiler.com/
               icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/immich.svg
-            - title: Stirling-PDF
-              url: https://pdf.dseiler.com/
-              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/stirling-pdf.svg
-            - title: Overleaf
-              url: https://latex.dseiler.com/
-              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/overleaf.svg
             - title: InfluxDB
               url: https://influxdb.dseiler.com/
               icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/influxdb-light.svg
@@ -54,9 +55,6 @@
             - title: Home Assistant
               url: https://ha.dseiler.com/
               icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/home-assistant.svg
-            - title: Open-WebUI
-              url: https://ai.dseiler.com/
-              icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/open-webui.svg
 
     - size: small
       widgets:
