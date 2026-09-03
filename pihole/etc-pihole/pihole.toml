@@ -1,7 +1,7 @@
 # Pi-hole configuration file (v6.2.3)
 # Encoding: UTF-8
 # This file is managed by pihole-FTL
-# Last updated on 2026-01-05 19:10:24 CET
+# Last updated on 2026-09-03 15:35:07 CEST
 
 [dns]
   # Array of upstream DNS servers used by Pi-hole
@@ -116,7 +116,8 @@
     "192.168.178.42 vault.dseiler.com",
     "192.168.178.42 cloud.dseiler.com",
     "192.168.178.42 ha.dseiler.com",
-    "192.168.178.42 ai.dseiler.com"
+    "192.168.178.42 ai.dseiler.com",
+    "192.168.178.42 budget.dseiler.com"
   ] ### CHANGED, default = []
 
   # If set, A and AAAA queries for plain names, without dots or domain parts, are never

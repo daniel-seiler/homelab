@@ -1,0 +1,23 @@
+services:
+  actual-server:
+    container_name: actual_server
+    image: actualbudget/actual-server:latest
+    restart: always
+    volumes:
+      - ./actual-data:/data
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-network"
+      - "traefik.http.routers.actual.rule=Host(`budget.${DOMAIN}`)"
+      - "traefik.http.routers.actual.entrypoints=websecure"
+      - "traefik.http.routers.actual.tls=true"
+      - "traefik.http.routers.actual.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.actual.service=actual"
+      - "traefik.http.services.actual.loadbalancer.server.port=5006"
+      - "traefik.http.routers.actual.middlewares=compresstraefik"
+
+networks:
+  traefik-network:
+    external: true
