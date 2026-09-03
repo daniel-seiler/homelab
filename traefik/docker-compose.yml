@@ -38,6 +38,7 @@ services:
       - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.docker.network=traefik-network"
+      - "traefik.http.routers.traefik.middlewares=error-pages-middleware"
     networks:
       - traefik-network
     restart: always
