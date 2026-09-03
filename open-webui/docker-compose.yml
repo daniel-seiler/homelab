@@ -38,6 +38,7 @@ services:
       - "traefik.http.routers.open-webui.entrypoints=websecure"
       - "traefik.http.routers.open-webui.tls.certresolver=letsencrypt"
       - "traefik.http.services.open-webui.loadbalancer.server.port=8080"
+      - "traefik.docker.network=traefik-network"
 
 volumes:
   ollama: {}
